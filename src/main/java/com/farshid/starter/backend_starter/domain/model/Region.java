@@ -1,7 +1,7 @@
 package com.farshid.starter.backend_starter.domain.model;
 
 public enum Region {
-    Central_Coast("Central Coast"), Shouthern_California("Southern California"), New_York("New York");
+    Central_Coast("Central Coast"), Shouthern_California("Southern California"), Northern_California("Northern California"), Varies("Varies");
 
     private String label;
 

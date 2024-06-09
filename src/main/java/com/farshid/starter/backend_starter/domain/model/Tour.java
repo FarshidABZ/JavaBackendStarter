@@ -1,7 +1,5 @@
 package com.farshid.starter.backend_starter.domain.model;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -25,7 +23,7 @@ public class Tour {
     private String blurb;
 
     @Column
-    private BigDecimal price;
+    private Integer price;
 
     @ManyToOne
     private TourPackage tourPackage;
@@ -41,7 +39,7 @@ public class Tour {
     public Tour(String title,
             String description,
             String blurb,
-            BigDecimal price,
+            Integer price,
             TourPackage tourPackage,
             Difficulty difficulty,
             Region region) {
@@ -89,11 +87,11 @@ public class Tour {
         this.blurb = blurb;
     }
 
-    public BigDecimal getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

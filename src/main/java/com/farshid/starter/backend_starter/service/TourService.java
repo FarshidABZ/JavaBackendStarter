@@ -1,7 +1,5 @@
 package com.farshid.starter.backend_starter.service;
 
-import java.math.BigDecimal;
-
 import org.springframework.stereotype.Service;
 
 import com.farshid.starter.backend_starter.domain.model.Difficulty;
@@ -24,12 +22,12 @@ public class TourService {
     public Tour createTour(String title,
             String description,
             String blurb,
-            BigDecimal price,
+            Integer price,
             String tourPackageCode,
             Difficulty difficulty,
             Region region) {
 
-        TourPackage tourPackage = tourPackageRepository.findById(tourPackageCode)
+        TourPackage tourPackage = tourPackageRepository.findByName(tourPackageCode)
                 .orElseThrow(() -> new RuntimeException("Tour package not found"));
 
         return tourRepository.save(new Tour(title, description, blurb, price, tourPackage, difficulty, region));
