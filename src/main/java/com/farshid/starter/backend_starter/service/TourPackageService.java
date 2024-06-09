@@ -15,7 +15,7 @@ public class TourPackageService {
 
     public TourPackage createTourPackage(String code, String name) {
         return tourPackageRepository
-                .findById(code)
+                .findByCode(code)
                 .orElse(tourPackageRepository.save(new TourPackage(code, name)));
 
     }
