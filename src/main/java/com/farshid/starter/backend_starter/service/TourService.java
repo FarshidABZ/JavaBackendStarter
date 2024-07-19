@@ -1,38 +1,48 @@
 package com.farshid.starter.backend_starter.service;
 
+import com.farshid.starter.backend_starter.domain.Tour;
+import com.farshid.starter.backend_starter.domain.TourPackage;
+import com.farshid.starter.backend_starter.repo.TourPackageRepository;
+import com.farshid.starter.backend_starter.repo.TourRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.farshid.starter.backend_starter.domain.model.Difficulty;
-import com.farshid.starter.backend_starter.domain.model.Region;
-import com.farshid.starter.backend_starter.domain.model.Tour;
-import com.farshid.starter.backend_starter.domain.model.TourPackage;
-import com.farshid.starter.backend_starter.repository.TourPackageRepository;
-import com.farshid.starter.backend_starter.repository.TourRepository;
+import java.util.Map;
 
+/**
+ * Tour  Service
+ *
+ * Created by Mary Ellen Bowman
+ */
 @Service
 public class TourService {
     private TourRepository tourRepository;
     private TourPackageRepository tourPackageRepository;
 
+    @Autowired
     public TourService(TourRepository tourRepository, TourPackageRepository tourPackageRepository) {
         this.tourRepository = tourRepository;
         this.tourPackageRepository = tourPackageRepository;
     }
 
-    public Tour createTour(String title,
-            String description,
-            String blurb,
-            Integer price,
-            String tourPackageCode,
-            Difficulty difficulty,
-            Region region) {
-
-        TourPackage tourPackage = tourPackageRepository.findByName(tourPackageCode)
-                .orElseThrow(() -> new RuntimeException("Tour package not found"));
-
-        return tourRepository.save(new Tour(title, description, blurb, price, tourPackage, difficulty, region));
+    /**
+     * Create a new Tour Object and persist it to the Database
+     *
+     * @param title Title of the tour
+     * @param tourPackageName tour Package of the tour
+     * @param details Extra details about the tour
+     * @return Tour
+     */
+    public Tour createTour(String title, String tourPackageName, Map<String, String> details) {
+        TourPackage tourPackage = tourPackageRepository.findByName(tourPackageName).orElseThrow(() ->
+                new RuntimeException("Tour package does not exist: " + tourPackageName));
+        return tourRepository.save(new Tour(title, tourPackage, details));
     }
-
+    /**
+     * Calculate the number of Tours in the Database.
+     *
+     * @return the total.
+     */
     public long total() {
         return tourRepository.count();
     }

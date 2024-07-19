@@ -1,26 +1,44 @@
 package com.farshid.starter.backend_starter.service;
 
+import com.farshid.starter.backend_starter.domain.TourPackage;
+import com.farshid.starter.backend_starter.repo.TourPackageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.farshid.starter.backend_starter.domain.model.TourPackage;
-import com.farshid.starter.backend_starter.repository.TourPackageRepository;
-
+/**
+ * Tour Package Service
+ *
+ * Created by Mary Ellen Bowman
+ */
 @Service
 public class TourPackageService {
     private TourPackageRepository tourPackageRepository;
 
+    @Autowired
     public TourPackageService(TourPackageRepository tourPackageRepository) {
         this.tourPackageRepository = tourPackageRepository;
     }
 
-    public TourPackage createTourPackage(String code, String name) {
-        return tourPackageRepository
-                .findByCode(code)
-                .orElse(tourPackageRepository.save(new TourPackage(code, name)));
 
+    /**
+     * Create a Tour Package
+     *
+     * @param code code of the package
+     * @param name name of the package
+     *
+     * @return new or existing tour package
+     */
+    public TourPackage createTourPackage(String code, String name) {
+        return tourPackageRepository.findById(code)
+                .orElse(tourPackageRepository.save(new TourPackage(code, name)));
     }
 
-    public Iterable<TourPackage> lookup() {
+    /**
+     * Lookup All Tour packages
+     *
+     * @return
+     */
+    public Iterable<TourPackage> lookup(){
         return tourPackageRepository.findAll();
     }
 
@@ -28,3 +46,4 @@ public class TourPackageService {
         return tourPackageRepository.count();
     }
 }
+
